@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>TukA1 | 个人主页</title>
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+:root{
+--bg: #e8edf2;
+--card-bg: rgba(255, 255, 255, 0.35);
+--text: #1d1d1f;
+--text-secondary: #424245;
+--text-hint: #6e6e73;
+--accent: #007aff;
+--border: rgba(255, 255, 255, 0.5);
+--shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+}
+
+.dark-mode{
+--bg: #12141a;
+--card-bg: rgba(30, 30, 40, 0.4);
+--text: #f5f5f7;
+--text-secondary: #c1c1c6;
+--text-hint: #86868b;
+--accent: #0a84ff;
+--border: rgba(255, 255, 255, 0.15);
+--shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.light-ray, .dark-ray {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: -1;
+overflow: hidden;
+opacity: 0;
+transition: opacity 0.5s ease;
+}
+
+@keyframes lightFlow {
+0% { transform: translateY(100%) skewY(-8deg); }
+100% { transform: translateY(-100%) skewY(-8deg); }
+}
+.light-ray span {
+position: absolute;
+width: 120%;
+height: 6px;
+left: -10%;
+background: linear-gradient(90deg, #4285f4, #34a853, #fbbc05, #ea4335);
+border-radius: 3px;
+animation: lightFlow 4s linear infinite;
+opacity: 0.6;
+}
+.light-ray span:nth-child(1) { top: 10%; animation-delay: 0s; }
+.light-ray span:nth-child(2) { top: 30%; animation-delay: 0.8s; }
+.light-ray span:nth-child(3) { top: 50%; animation-delay: 1.6s; }
+.light-ray span:nth-child(4) { top: 70%; animation-delay: 2.4s; }
+
+@keyframes darkFlow {
+0% { transform: translateY(100%) skewY(8deg); }
+100% { transform: translateY(-100%) skewY(8deg); }
+}
+.dark-ray span {
+position: absolute;
+width: 120%;
+height: 6px;
+left: -10%;
+background: linear-gradient(90deg, #ff4d94, #7b61ff, #00d4ff, #39ff14);
+border-radius: 3px;
+animation: darkFlow 4s linear infinite;
+opacity: 0.7;
+}
+.dark-ray span:nth-child(1) { top: 10%; animation-delay: 0s; }
+.dark-ray span:nth-child(2) { top: 30%; animation-delay: 0.8s; }
+.dark-ray span:nth-child(3) { top: 50%; animation-delay: 1.6s; }
+.dark-ray span:nth-child(4) { top: 70%; animation-delay: 2.4s; }
+
+.color-light .card,
+.color-light .btn-theme {
+animation: lightShine 2.8s linear infinite;
+}
+@keyframes lightShine {
+0% { box-shadow: 0 0 10px #4285f4, 0 0 20px #34a853; }
+50% { box-shadow: 0 0 10px #fbbc05, 0 0 20px #ea4335; }
+100% { box-shadow: 0 0 10px #4285f4, 0 0 20px #34a853; }
+}
+
+.color-dark .card,
+.color-dark .btn-theme {
+animation: darkShine 2.8s linear infinite;
+}
+@keyframes darkShine {
+0% { box-shadow: 0 0 12px #ff4d94, 0 0 24px #7b61ff; }
+50% { box-shadow: 0 0 12px #00d4ff, 0 0 24px #39ff14; }
+100% { box-shadow: 0 0 12px #ff4d94, 0 0 24px #7b61ff; }
+}
+
+body.color-light .light-ray,
+body.color-dark .dark-ray {
+opacity: 1;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+max-width: 800px;
+margin: 0 auto;
+padding: 2rem 1rem;
+background-color: var(--bg);
+color: var(--text);
+line-height: 1.6;
+user-select: none;
+overflow-x: hidden;
+zoom: 100%;
+}
+
+header {
+text-align: center;
+margin-bottom: 3rem;
+}
+
+h1 {
+font-size: 2.5rem;
+font-weight: 600;
+margin-bottom: 0.5rem;
+letter-spacing: 1px;
+}
+
+.subtitle {
+color: var(--text-hint);
+font-size: 1.1rem;
+}
+
+section {
+margin: 2.5rem 0;
+}
+
+h2 {
+font-size: 1.4rem;
+font-weight: 500;
+margin-bottom: 1rem;
+padding-left: 0.75rem;
+border-left: 3px solid var(--accent);
+}
+
+.card {
+background: var(--card-bg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+border: 1px solid var(--border);
+border-radius: 18px;
+padding: 1.25rem;
+margin-bottom: 1rem;
+box-shadow: var(--shadow);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:active {
+transform: scale(0.98);
+}
+
+.card h3 {
+margin-bottom: 0.5rem;
+font-weight: 500;
+}
+
+.card p {
+color: var(--text-secondary);
+margin-bottom: 0.75rem;
+}
+
+.card a {
+display: inline-block;
+color: var(--accent);
+text-decoration: none;
+font-weight: 500;
+}
+
+.card a:hover {
+text-decoration: underline;
+}
+
+footer {
+text-align: center;
+margin-top: 4rem;
+color: var(--text-hint);
+font-size: 0.9rem;
+}
+
+.get-pwd-tip {
+text-align: center;
+margin-top: 1.5rem;
+padding: 0.8rem;
+font-size: 0.9rem;
+color: var(--text-hint);
+background: var(--card-bg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+border: 1px solid var(--border);
+border-radius: 12px;
+box-shadow: var(--shadow);
+}
+
+.pwd-warn-tip {
+text-align: center;
+margin-top: 0.8rem;
+font-size: 0.85rem;
+color: var(--text-hint);
+}
+
+.btn-wrap {
+display: flex;
+justify-content: center;
+gap: 1.2rem;
+margin: 2rem 0 1.5rem;
+}
+
+.btn-theme {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+border: 1px solid var(--border);
+background: var(--card-bg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+color: var(--text);
+font-size: 20px;
+cursor: pointer;
+box-shadow: var(--shadow);
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s ease;
+}
+
+.btn-theme:active{
+transform: scale(0.92);
+}
+
+.pwd-box {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.8rem;
+padding: 1rem;
+margin-top: 1rem;
+background: var(--card-bg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+border: 1px solid var(--border);
+border-radius: 18px;
+box-shadow: var(--shadow);
+flex-wrap: wrap;
+}
+
+.pwd-input {
+padding: 0.6rem 1rem;
+border-radius: 12px;
+border: 1px solid var(--border);
+background: rgba(255,255,255,0.2);
+color: var(--text);
+outline: none;
+font-size: 1rem;
+width: 180px;
+}
+
+.pwd-btn {
+padding: 0.6rem 1.2rem;
+border-radius: 12px;
+border: 1px solid var(--border);
+background: var(--card-bg);
+backdrop-filter: blur(18px);
+-webkit-backdrop-filter: blur(18px);
+color: var(--text);
+cursor: pointer;
+font-size: 1rem;
+transition: all 0.2s ease;
+}
+
+.pwd-btn:active {
+transform: scale(0.96);
+}
+
+.tip-text {
+width: 100%;
+text-align: center;
+margin-top: 0.5rem;
+font-size: 0.85rem;
+color: var(--text-hint);
+}
+
+#auth-area, #message-area {
+display: none;
+}
+#message-area .message-item {
+padding: 0.8rem;
+border-bottom: 1px solid var(--border);
+color: var(--text-secondary);
+}
+textarea {
+width: 100%;
+padding: 0.8rem;
+border-radius: 12px;
+border: 1px solid var(--border);
+background: rgba(255,255,255,0.2);
+color: var(--text);
+outline: none;
+font-size: 1rem;
+resize: vertical;
+min-height: 80px;
+margin-bottom: 0.8rem;
+}
+button.primary-btn {
+padding: 0.6rem 1.2rem;
+border-radius: 12px;
+border: none;
+background: var(--accent);
+color: white;
+cursor: pointer;
+font-size: 1rem;
+transition: all 0.2s ease;
+}
+button.primary-btn:active {
+transform: scale(0.96);
+}
+
+@media (min-width:1024px) {
+body{padding: 3rem 2rem;}
+}
+</style>
+<!-- 引入 Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="light-ray">
+  <span></span><span></span><span></span><span></span>
+</div>
+<div class="dark-ray">
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+<h1>TukA1</h1>
+<p class="subtitle">欢迎来到我的个人小站 👋</p>
+</header>
+
+<section id="about">
+<h2>关于我</h2>
+<div class="card">
+<p>爱好制作趣味测试网页，喜欢创作各类小工具。</p>
+<p>这里是我的个人主页，展示我的所有作品与实用工具。</p>
+</div>
+</section>
+
+<section id="works">
+<h2>我的作品</h2>
+<div class="card">
+<h3>🧪 性取向测试</h3>
+<p>趣味测试，10道题快速了解你的性取向倾向。</p>
+<a href="#" target="_blank">开始测试 →</a>
+</div>
+<div class="card">
+<h3>🐾 趣味测试</h3>
+<p>趣味答题小测试，休闲娱乐使用。</p>
+<a href="#" target="_blank">开始测试 →</a>
+</div>
+<div class="card">
+<h3>🎭 整蛊网站</h3>
+<p>趣味整蛊站点，休闲玩乐使用。</p>
+<a href="#" target="_blank">进入网站 →</a>
+</div>
+</section>
+
+<!-- 实用工具：在线抠图 + 在线白板 -->
+<section id="tools">
+<h2>实用工具</h2>
+<div class="card">
+<p>各类在线工具专区，持续更新中，点击卡片即可跳转使用。</p>
+</div>
+<div class="card">
+<h3>🖼️ 在线AI抠图</h3>
+<p>一键去除图片背景，支持人像、商品、证件照抠图，免费在线使用。</p>
+<a href="https://tool.lu/cutout/" target="_blank">立即使用 →</a>
+</div>
+<div class="card">
+<h3>✏️ 在线白板画板</h3>
+<p>免费在线白板，支持画笔、图形、文字、涂鸦、会议绘图、头脑风暴。</p>
+<a href="https://tool.lu/x/whiteboard/" target="_blank">立即使用 →</a>
+</div>
+</section>
+
+<!-- 留言板（需登录） -->
+<section id="message">
+<h2>留言板</h2>
+<div class="card">
+  <div id="auth-area">
+    <input type="email" id="email" placeholder="邮箱" style="width:100%; margin-bottom:0.5rem; padding:0.6rem; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.2); color:var(--text); outline:none;">
+    <input type="password" id="password" placeholder="密码" style="width:100%; margin-bottom:0.8rem; padding:0.6rem; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.2); color:var(--text); outline:none;">
+    <button class="primary-btn" id="loginBtn">登录 / 注册</button>
+  </div>
+  <div id="message-area">
+    <p id="user-info"></p>
+    <button class="pwd-btn" id="logoutBtn" style="margin-bottom:1rem;">退出登录</button>
+    <textarea id="messageInput" placeholder="写下你的留言..."></textarea>
+    <button class="primary-btn" id="sendBtn">发送留言</button>
+    <div id="messageList" style="margin-top:1.5rem;"></div>
+  </div>
+</div>
+</section>
+
+<footer>
+<p>© 2026 TukA1. All rights reserved.</p>
+</footer>
+
+<div class="btn-wrap">
+  <button class="btn-theme" id="switchBtn">🌓</button>
+  <button class="btn-theme" id="colorBtn">✨</button>
+</div>
+
+<div class="pwd-box">
+  <input type="text" class="pwd-input" id="pwdInput" placeholder="请输入解锁密码">
+  <button class="pwd-btn" id="unlockBtn">解锁炫彩</button>
+  <div class="tip-text" id="tipText"></div>
+</div>
+
+<div class="get-pwd-tip">
+密码获取途径：去抖音搜索tukulia1xh关注以后获取密码
+</div>
+<div class="pwd-warn-tip">
+温馨提示：密码不定时更换一次，防止密码泄露
+</div>
+
+<script>
+// Supabase 配置（已填好你的信息）
+const SUPABASE_URL = "https://ekwgxsddjixfxpdyptfg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_NPDVXVM73vbRgmHokfn0HQ_L1ek9Vol";
+
+const { createClient } = supabase;
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const switchBtn = document.getElementById('switchBtn');
+const colorBtn = document.getElementById('colorBtn');
+const unlockBtn = document.getElementById('unlockBtn');
+const pwdInput = document.getElementById('pwdInput');
+const tipText = document.getElementById('tipText');
+const body = document.body;
+const correctPwd = "TukA1666";
+let isUnlocked = false;
+
+// 留言板元素
+const authArea = document.getElementById('auth-area');
+const messageArea = document.getElementById('message-area');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const messageInput = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+const messageList = document.getElementById('messageList');
+const userInfo = document.getElementById('user-info');
+
+// 清空所有炫彩样式
+function clearColorMode(){
+  body.classList.remove('color-light','color-dark');
+}
+
+// 深浅模式切换
+switchBtn.addEventListener('click', function(){
+  clearColorMode();
+  tipText.innerText = "";
+  body.classList.toggle('dark-mode');
+});
+
+// 炫彩开关
+colorBtn.addEventListener('click', function(){
+  if(!isUnlocked){
+    tipText.innerText = "请先输入正确密码解锁！";
+    return;
+  }
+  tipText.innerText = "";
+  if(body.classList.contains('dark-mode')){
+    if(body.classList.contains('color-dark')){
+      body.classList.remove('color-dark');
+    }else{
+      clearColorMode();
+      body.classList.add('color-dark');
+    }
+  }else{
+    if(body.classList.contains('color-light')){
+      body.classList.remove('color-light');
+    }else{
+      clearColorMode();
+      body.classList.add('color-light');
+    }
+  }
+});
+
+// 解锁炫彩密码
+unlockBtn.addEventListener('click', function(){
+  const val = pwdInput.value.trim();
+  if(val === correctPwd){
+    isUnlocked = true;
+    tipText.innerText = "密码正确，已解锁炫彩模式 ✅";
+    if(body.classList.contains('dark-mode')){
+      clearColorMode();
+      body.classList.add('color-dark');
+    }else{
+      clearColorMode();
+      body.classList.add('color-light');
+    }
+  }else{
+    isUnlocked = false;
+    tipText.innerText = "密码错误，请重新输入 ❌";
+    clearColorMode();
+  }
+});
+
+// 检查登录状态
+async function checkUser() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    authArea.style.display = 'none';
+    messageArea.style.display = 'block';
+    userInfo.textContent = `已登录：${user.email}`;
+    loadMessages();
+  } else {
+    authArea.style.display = 'block';
+    messageArea.style.display = 'none';
+  }
+}
+
+// 加载留言
+async function loadMessages() {
+  const { data: messages, error } = await supabase
+    .from('messages')
+    .select('content, created_at, user_id')
+    .order('created_at', { ascending: false });
+  
+  if (error) return console.error(error);
+  messageList.innerHTML = '';
+  messages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'message-item card';
+    div.innerHTML = `<p>${msg.content}</p><small>${new Date(msg.created_at).toLocaleString()}</small>`;
+    messageList.appendChild(div);
+  });
+}
+
+// 登录/注册
+loginBtn.addEventListener('click', async () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    alert("登录失败：" + error.message);
+  } else {
+    checkUser();
+  }
+});
+
+// 退出登录
+logoutBtn.addEventListener('click', async () => {
+  await supabase.auth.signOut();
+  checkUser();
+});
+
+// 发送留言
+sendBtn.addEventListener('click', async () => {
+  const content = messageInput.value.trim();
+  if (!content) return alert("留言不能为空");
+  
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return alert("请先登录");
+  
+  const { error } = await supabase.from('messages').insert([{
+    user_id: user.id,
+    content: content
+  }]);
+  
+  if (error) return alert("发送失败：" + error.message);
+  messageInput.value = '';
+  loadMessages();
+});
+
+// 初始化页面
+checkUser();
+
+// 禁止右键、F12、开发者工具
+document.oncontextmenu = function(){return false;};
+document.onkeydown = function(e){
+let ev = e || window.event;
+let key = ev.keyCode || ev.which;
+if(key === 123 || (ev.ctrlKey && key === 85) || (ev.ctrlKey && key === 83) || (ev.ctrlKey && e.shiftKey)){
+return false;
+}
+};
+
+// 禁止 Ctrl+滚轮缩放
+window.addEventListener('wheel',function(e){
+  if(e.ctrlKey) e.preventDefault();
+},{passive:false});
+</script>
+</body>
+</html>
